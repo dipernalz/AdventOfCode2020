@@ -1,8 +1,3 @@
 inpt = open('input.txt', 'r').read().split('\n')
-
-p1 = sum(1 if inpt[i][(i * 1) % len(inpt[i])] == '#' else 0 for i in range(len(inpt)))
-p2 = sum(1 if inpt[i][(i * 3) % len(inpt[i])] == '#' else 0 for i in range(len(inpt)))
-p3 = sum(1 if inpt[i][(i * 5) % len(inpt[i])] == '#' else 0 for i in range(len(inpt)))
-p4 = sum(1 if inpt[i][(i * 7) % len(inpt[i])] == '#' else 0 for i in range(len(inpt)))
-p5 = sum(1 if inpt[i * 2][(i) % len(inpt[i])] == '#' else 0 for i in range(len(inpt) // 2))
-print(p1 * p2 * p3 * p4 * p5)
+treeLst = [sum(1 if inpt[i * d][(i * r) % len(inpt[i])] == '#' else 0 for i in range(len(inpt) // d)) for r, d in ((1, 1), (3, 1), (5, 1), (7, 1), (1, 2))]
+print(treeLst[0] * treeLst[1] * treeLst[2] * treeLst[3] * treeLst[4])
