@@ -1,27 +1,17 @@
 inpt = open('input.txt', 'r').read().split('\n')
 
-def travel(direction, dist):
-	global x, y
-	if direction == 'N':
-		y += dist
-	elif direction == 'S':
-		y -= dist
-	elif direction == 'E':
-		x += dist
-	elif direction == 'W':
-		x -= dist
-
-x, y = 0, 0
-direction = 'E'
+x, y, direction = 0, 0, 'E'
 directionLst = ['N', 'E', 'S', 'W']
+directionDct = {'N': (0, 1), 'E': (1, 0), 'S': (0, -1), 'W': (-1, 0)}
 for i in inpt:
-	instr = i[0]
-	n = int(i[1:])
-	if instr == 'F' or instr in directionLst:
-		travel(direction if instr == 'F' else instr, n)
-	elif instr == 'R':
-		direction = directionLst[int((directionLst.index(direction) + n / 90) % 4)]
-	elif instr == 'L':
-		direction = directionLst[int((directionLst.index(direction) - n / 90) % 4)]
-
+	instr, n = i[0], int(i[1:])
+	if instr == 'F':
+		x += directionDct[direction][0] * n
+		y += directionDct[direction][1] * n
+	elif instr in directionDct:
+		x += directionDct[instr][0] * n
+		y += directionDct[instr][1] * n
+	else:
+		direction = directionLst[int((directionLst.index(direction) + \
+			(n if instr == 'R' else -n) / 90) % 4)]
 print(abs(x) + abs(y))
